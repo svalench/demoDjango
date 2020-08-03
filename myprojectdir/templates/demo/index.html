@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{title}}</title>
+</head>
+<body>
+<a href="{%url 'association'%}">association</a><hr align="left" width="20%">
+<a href="{%url 'manufacture'%}">manufacture</a><hr align="left" width="20%">
+<a href="{%url 'department'%}">departments</a><hr align="left" width="20%">
+<a href="{%url 'line'%}">line</a><hr align="left" width="20%">
+<a href="{%url 'connections'%}">connctions</a><hr align="left" width="20%">
+<a href="{%url 'point'%}">point</a><hr align="left" width="20%"><br>
+
+
+<hr>
+<a href="{%url 'graphListAll'%}">Show list graph list</a>
+<hr>
+Write in this place what you want  
+<TEXTAREA id="text"></TEXTAREA><hr>
+<div id='restext'></div>
+<script type="text/javascript">
+	
+	var res = document.getElementById('restext');
+	var text = document.getElementById('text');
+	text.onkeyup = function(){
+		res.innerHTML = this.value;
+	};
+
+
+
+
+
+
+// var socket = new WebSocket(
+//             'ws://'
+//             + 'localhost:8000'
+//             + '/ws/'
+//         );
+
+// socket.onopen = function() {
+//   alert("Соединение установлено.");
+// };
+
+// socket.onclose = function(event) {
+//   if (event.wasClean) {
+//     alert('Соединение закрыто чисто');
+//   } else {
+//   //  alert('Обрыв соединения'); // например, "убит" процесс сервера
+//   }
+//  // alert('Код: ' + event.code + ' причина: ' + event.reason);
+// };
+
+// socket.onmessage = function(event) {
+//   alert("Получены данные " + event.data);
+// };
+
+// socket.onerror = function(error) {
+//   alert("Ошибка " + error.message);
+// };
+
+// function send(ms){
+// 	let msg = {"message":ms,"dd":"sdf"}
+// 	socket.send(JSON.stringify(msg));
+// }
+
+  
+
+
+</script>
+</body>
+</html>

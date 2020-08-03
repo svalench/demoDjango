@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>List</title>
+</head>
+<body>
+<a href="{%url 'manufactureAdd'%}">manufacture add</a>
+<a href="{%url 'start'%}">HOME</a>
+
+<div id="list">
+	{%for m in zavod%}
+	<div style="border: solid;">
+		<a href="#this">{{m.name}}</a>
+		<a href="{%url 'manGetDelete' id=m.id %}">delete</a>
+	</div>
+	{%endfor%}
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>graph list</title>
+</head>
+<body>
+<a href="{%url 'start'%}">HOME</a>
+
+<div id="list">
+	{%for m in point%}
+	<div style="border: solid;">
+		<h2>{{m.name}}</h2>
+		<hr>
+		{%for i in m.point_set.all%}
+		<h5>{{i.name}}</h5>
+		<h5>{{i.get_childModel_display}}</h5> 
+------------------------------------------------------------------------------
+		<br>
+		{%endfor%}
+		<hr>
+		<a href="{%url 'graphAll' id=m.id %}">view</a><br>
+		<hr>
+	</div>
+	{%endfor%}
+</div>
+</body>
+</html>

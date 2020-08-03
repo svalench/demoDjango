@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>webIzospan</title>
+    <link rel="stylesheet" href="{%static '/assets/bootstrap/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="{%static '/assets/css/exp.compiled.css'%}">
+    <link rel="stylesheet" href="{%static '/assets/css/mloureiro1973-login.css'%}">
+    <link rel="stylesheet" href="{%static '/assets/css/noVal.css'%}">
+</head>
+
+<body style="font-family: Montserrat, sans-serif; background: linear-gradient(180deg, #F3F6F7 0%, #F5F7F9 60.75%, #F9FAFB 100%);">
+    <div class="container mt-4">
+        <div class="row justify-content-around">
+            <div class="col-auto border-right border-primary"><a href="/"><img src="{%static '/assets/img/logo.svg'%}" style="height: 70px;"></a></div>
+            <div class="col-auto border-right border-primary"><img src="{%static '/assets/img/Siemens-logo 1-min.png'%}" style="max-height: 95px;height: 70px;"></div>
+            <div class="col-auto mt-sm-1"><img src="{%static 'assets/img/isobud_logo-min.png'%}" style="max-height: 95px;height: 70px;"></div>
+            <div class="col-auto d-flex justify-content-center align-items-center border border-primary border-right-0 border-top-0 mt-sm-1">
+                <h2 style="font-weight: bold;font-size: 35px;color: rgb(61,152,242);">MV- logger</h2>
+            </div>
+        </div>
+    </div>
+    {% verbatim %}
+    <hr style="width: 90%;margin-top: 30px;margin-bottom: 30px;">
+    <div class="container-fluid" id="vueAppJs" style="padding:0 50px;"><div class="row my-4" v-for="(item,index) in chart" :key="item.key">
+    <div class="col-auto d-none d-md-flex justify-content-center align-items-center btn-parent-menu"><span
+            class="btn-option-open">ПАРАМЕТРЫ</span>
+        <div class="row fieldMenu">
+            <div class="col-auto flex-column" style="width: 465px;height: 348px;overflow:auto;">
+                <div class="row no-gutters">
+                    <div class="col-12 d-xl-flex d-flex justify-content-center align-items-center d-md-flex">
+                        <h2 class="d-flex onlineValue" :one-num=index><span
+                                style="text-decoration: underline;">{{chart[index].current}}</span></h2>
+                    </div>
+                </div>
+                <hr style="margin: 8px;width: 90%;" />
+                <div class="row no-gutters">
+                    <div class="col-6 border-right border-info">
+                        <div class="row no-gutters">
+                            <div class="col-12">
+                                <h6 class="text-center text-danger">MAX</h6>
+                            </div>
+                            <div class="col-12">
+                                <h5 class="text-center" :one-num=index>{{chart[index].min}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row no-gutters">
+                            <div class="col-12">
+                                <h6 class="text-center text-secondary">MIN</h6>
+                            </div>
+                            <div class="col-12">
+                                <h5 class="text-center" :one-num=index>{{chart[index].max}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr style="margin: 8px;width: 90%;" />
+                <div class="row no-gutters">
+                    <div class="col-auto d-flex align-items-center" style="min-width: 180px;"><span
+                            class="justify-content-start">Остановка:</span></div>
+                    <div class="col d-flex align-items-center" style="padding-left: 0px;"><input type="number"
+                            class="d-inline-block form-control set-values" placeholder="Введите уставку"
+                            style="width:70%" v-model=chart[index].stopSet :one-num=index one-type="stop" />
+
+                            <!-- <img class='matcon ml-2' :src="`/static/assets/img/${chart[index].stopCheck}.svg`" :one-num=index one-type="stop" /> -->
+                            </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-auto d-flex align-items-center" style="min-width: 180px;"><span>Авария:</span></div>
+                    <div class="col d-flex align-items-center" style="padding-left: 0px;"><input type="number"
+                            class="d-inline-block form-control set-values" placeholder="Введите уставку"
+                            style="width:70%" v-model=chart[index].alarmSet :one-num=index one-type="alarm" />
+                            <!-- <img class='matcon ml-2' :src="`/static/assets/img/${chart[index].alarmCheck}.svg`" :one-num=index one-type="alarm" /> -->
+                            </div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-auto d-flex align-items-center" style="min-width: 180px;"><span
+                            class="justify-content-start">Предупреждение:</span></div>
+                    <div class="col d-flex align-items-center" style="padding-left: 0px;"><input type="number"
+                            class="d-inline-block form-control set-values" placeholder="Введите уставку"
+                            style="width:70%" v-model=chart[index].warningSet :one-num=index one-type="warning" />
+                            <!-- <img class='matcon ml-2' :src="`/static/assets/img/${chart[index].warningCheck}.svg`" :one-num=index one-type="warning" /> -->
+                            </div>
+                </div>
+                <hr style="margin: 8px;width: 90%;" />
+                <div class="row no-gutters">
+                    <div class="col d-flex align-items-center" style="max-width: 180px;"><span
+                            class="justify-content-start">Начало графика:</span></div>
+                    <div class="col d-flex" style="padding-left: 0px;"><input class="form-control graf-picker"
+                            type="datetime-local" style="width:90%" v-model=chart[index].startDate :min=chart[index].minDate
+                            :max=chart[index].maxDate :one-num=index /></div>
+                </div>
+                <div class="row no-gutters">
+                    <div class="col-6 d-flex align-items-center" style="max-width: 180px;"><span
+                            class="justify-content-start">Окончание графика:</span></div>
+                    <div class="col d-flex" style="padding-left: 0px;"><input class="form-control graf-picker"
+                            type="datetime-local" style="width:90%" v-model=chart[index].stopDate :min=chart[index].minDate
+                            :max=chart[index].maxDate :one-num=index /></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col" style="background-color: transparent;">
+        <div :id="`graph${index}`" style="background-color: transparent;">
+            <div class="d-flex justify-content-center align-items-center" style="height:348px;"><span role="status"
+                    class="spinner-border text-primary" style="width:5rem;height:5rem;border-width:.5rem;"></span></div>
+        </div>
+    </div>
+    <div class="col-auto d-none d-md-flex justify-content-center align-items-center btn-parent-chart-add">
+        <div class="row fieldMenu custScroll" style="height: 348px; overflow-y:auto; overflow-x:hidden;">
+            <div class="col-12 d-flex flex-column align-items-center" v-for="(jtem,jndex) in chart" :number-chart=index :key="`kk${jtem.key}`">
+                <button class="btn my-2 addGraph" type="button" style="width: 100%;" :disabled="item.name===jtem.name" :class="item.name===jtem.name?'btn-primary':'btn-outline-primary'">{{jtem.name}}</button>
+            </div>
+            
+            <div class="col-12 d-flex flex-column align-items-center" :number-chart=index>
+                <button class="btn my-2 btn-primary clearGraph" type="button" style="width: 100%;">Очистить</button>
+            </div>
+
+        </div><span class="btn-chart-open">ДОБАВИТЬ ГРАФИК</span>
+    </div>
+</div>
+
+<!-- <div class="row my-4" v-for="(item,index) in chartD" :key="item.key">
+    <div class="col-auto d-none d-md-flex justify-content-center align-items-center btn-parent-menu"><span
+            class="btn-option-open">ПАРАМЕТРЫ</span>
+        <div class="row fieldMenu">
+            <div class="col-auto flex-column" style="width: 465px;height: 348px;overflow:auto;">
+                <div class="row no-gutters" :one-num=index>
+                    <div class="col-12 my-1" v-for="(jtem,jindex) in item.strData">
+                        <label>{{jtem.name}}</label>
+                        <select class="form-control" style="width:95;" :name=jtem.name>
+                            <optgroup label="Выберите период">
+                                <option value='no'>Выбери</option>
+                                <option :min=ktem.x :max=ktem.x2 :value=ktem.x v-for="(ktem,kndex) in jtem.data">{{`c ${new Date(ktem.x).toISOString().substring(0, 16)} по ${new Date(ktem.x2).toISOString().substring(0, 16)}`}}</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col" style="max-height: 348px;min-height: 348px;background-color: transparent;">
+        <div :id="`graphD${index}`" style="background-color: transparent;">
+            <div class="d-flex justify-content-center align-items-center" style="height:348px;"><span role="status"
+                    class="spinner-border text-primary" style="width:5rem;height:5rem;border-width:.5rem;"></span></div>
+        </div>
+    </div>
+</div> -->
+
+
+
+
+</div>
+{% endverbatim %}
+<script type="text/javascript">
+   var dataPoint = "{{dataPoint|escapejs }}";
+   var dataPoint = JSON.parse(dataPoint);
+</script>
+    <script src="{%static '/assets/js/jquery.min.js'%}"></script>
+    <script src="{%static '/assets/bootstrap/js/bootstrap.min.js'%}"></script>
+    <script src="{%static '/assets/js/vue.min.js'%}"></script>
+    <script src="{%static '/assets/js/vueExp.js'%}"></script>
+    <script src="{%static '/assets/js/check.js'%}"></script>
+    <script src="{%static '/assets/js/addFunctionChartBefore.js'%}"></script>
+    <script src="{%static '/assets/js/highstock.js'%}"></script>
+    <script src="{%static '/assets/js/boost.js'%}"></script>
+    <script src="{%static '/assets/js/xrange.js'%}"></script>
+    <script src="{%static '/assets/js/drawCharts.js'%}"></script>
+    <script src="{%static '/assets/js/addFunctionChartAfter.js'%}"></script>
+    <script src="{%static '/assets/js/addFunctionChartAfterD.js'%}"></script>
+</body>
+
+</html>

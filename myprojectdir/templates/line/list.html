@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Line List</title>
+</head>
+<body>
+<a href="{%url 'lineAdd'%}">Line add</a>
+<a href="{%url 'start'%}">HOME</a>
+
+
+<div id="list">
+	name line ______||  name manufacture  || action
+	{%for m in line%}
+	<div style="border: solid;">
+		<a href="#this">{{m.name}}</a>  ______________||  - {{m.parent.name}} __________ || ____
+		<a href="{%url 'manGetDelete' id=m.id %}">delete</a>
+	</div>
+	{%endfor%}
+</div>
+</body>
+</html>

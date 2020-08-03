@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>list point on {{association.name}}</title>
+</head>
+<body>
+<a href="{%url 'associationAdd'%}">association add</a>
+<a href="{%url 'start'%}">HOME</a>
+
+<div id="list">
+	{%for m in association%}
+	<div style="border: solid;">
+		<h2>association name -  <b>{{m.name}}</b></h2>  <a href="{%url 'associationGetDelete' id=m.id %}">delete</a>
+		<hr>
+	</div>
+	{%endfor%}
+</div>
+</body>
+</html>

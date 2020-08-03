@@ -1,0 +1,62 @@
+.btn-parent-menu,
+.btn-parent-chart-add {
+  border: 2px solid #2A68A6;
+  padding: 0;
+  min-height: 348px;
+  width: 44px;
+}
+
+.fieldMenu {
+  display: none;
+}
+
+.btn-parent-menu:hover {
+  width: 465px;
+  border: 2px dashed #2A68A6;
+}
+
+.btn-parent-menu:hover .btn-option-open {
+  display: none;
+}
+
+.btn-parent-menu:hover .fieldMenu {
+  display: block;
+}
+
+.btn-option-open,
+.btn-chart-open {
+  white-space: nowrap;
+  color: #3D98F2;
+  transform: rotate(-90deg);
+  font-weight: bold;
+  margin: 0 -35px;
+}
+
+.btn-parent-chart-add:hover {
+  width: 200px;
+  border: 2px dashed #2A68A6;
+}
+
+.btn-parent-chart-add:hover .btn-chart-open {
+  display: none;
+}
+
+.btn-parent-chart-add:hover .fieldMenu {
+  display: block;
+}
+
+.matcon {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A68A6;
+}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>add department to line</title>
+</head>
+<body>
+	<a href="{%url 'start'%}">HOME</a>
+<form method="POST" action="{%url 'departmentGetAdd'%}">
+	{%csrf_token%}
+	 {{ form.as_p }}
+	<input type="submit" value="add" name="">
+</form>
+</body>
+</html>

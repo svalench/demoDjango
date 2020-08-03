@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>list point on {{point.0.parent.name}}</title>
+</head>
+<body>
+<a href="{%url 'pointAdd'%}">point add</a>
+<a href="{%url 'start'%}">HOME</a>
+
+<div id="list">
+	{%for m in point%}
+	<div style="border: solid;">
+		<h1>Line name <b>{{m.parent.name}}</b></h1><hr>
+		<h2>Connection name -  <b>{{m.name}}</b></h2>
+		<hr>
+		{%for i in m.point_set.all%}
+		<h4>Point name - <a href="#this">{{i.name}}</a></h4><hr align="left" width="10%">  <h5>{{i.get_childModel_display}}, addres Read start = {{i.startRead}}, addres Read end = {{i.endRead}}</h5> 
+		<a href="{%url 'pointGetDelete' id=i.id %}">delete</a><br>
+		<hr width="99%">
+		{%endfor%}
+		<hr>
+	</div>
+	{%endfor%}
+</div>
+</body>
+</html>

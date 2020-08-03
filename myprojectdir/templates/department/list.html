@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>list department on {{department.name}}</title>
+</head>
+<body>
+<a href="{%url 'departmentAdd'%}">department add</a>
+<a href="{%url 'start'%}">HOME</a>
+
+<div id="list">
+	{%for m in department%}
+	<div style="border: solid;">
+		<h2>department name -  <b>{{m.name}}</b></h2>
+		<hr>
+	</div>
+	{%endfor%}
+</div>
+</body>
+</html>

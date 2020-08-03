@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>add Line in DB</title>
+</head>
+<body>
+
+	<a href="{%url 'start'%}">HOME</a>
+<form method="POST" action="{%url 'lineGetAdd'%}">
+	{%csrf_token%}
+	{{ form.as_p }}
+	<input type="submit" value="add" name="">
+</form>
+</body>
+</html>
