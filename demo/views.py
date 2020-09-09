@@ -14,7 +14,8 @@ from demo.snap7_plc import *
 import asyncio
 import websockets
 from django.contrib.auth.decorators import login_required
-
+#from .serializers import *
+from rest_framework.response import Response
 
 # Create your views here.
 
@@ -24,6 +25,11 @@ def index(request):
 	          }
 	return render(request, 'demo/index.html', context)
 
+
+class ReportView:
+	@login_required
+	def getReport(request):
+		pass
 
 
 #__________________________________________Association__________________________________________________________________
@@ -236,6 +242,8 @@ class GraphView:
 		context = {
 	            'point': line,
 	          }
+		e = Data(value=12,parent_id=24)
+		e.save()
 		return render(request, 'demo/graphList.html', context)
 	@login_required
 	def viewGraph(request,id):
@@ -294,6 +302,7 @@ class GraphView:
 
 
 
+
 def opros(data,points,count):
 	try:
 		plc1 = PlcRemoteUse(data['ip'],data['rack'],data['slot'])
@@ -334,13 +343,13 @@ def opros(data,points,count):
 					except:
 						print("error quite!!")
 			print("data returned")
-			time.sleep(1)
+			time.sleep(10)
 		if(not plc1.getdata(data['startRead'],data['endRead'])):
 			print('data will be not returned')
 			main(count)
 			return False
 	else:
-		time.sleep(3)
+		time.sleep(30)
 		main(count)
 		return False
 		
@@ -381,3 +390,58 @@ main()
 def datetimeconverter(o):
     if isinstance(o, datetime.datetime):
         return math.ceil(o.timestamp()*1000)
+
+
+
+
+
+
+
+
+from rest_framework.views import APIView
+
+
+class LineViewAPI(APIView):
+    def get(self, request,id):
+        line = Line.objects.filter(parent_id=id)
+        # the many param informs the serializer that it will be serializing more than a single article.
+        serializer = LineSerializer(line, many=True)
+        return Response({"articles": serializer.data})
+
+    def viewGraph(request,id):
+        line = Line.objects.filter(id=id)
+        points = line[0].connections_set.all()
+        res = {"chart":[],"chartD":[]}
+        for j in points:
+            for i in j.point_set.all():
+                a = {}
+                a['name'] = i.name
+                if i.childModel=="real" or i.childModel=="int" :
+                    a['unit'] = i.unit
+                    a['yAxisName'] = i.yaxis
+                    a['stopSet'] = i.stop
+                    a['alarmSet'] = i.alarm
+                    a['warningSet'] = i.warning
+                    a['arrDataChart'] = list(i.data_set.annotate(x=F('datetime'),y=F('value')).order_by("x").values('x','y'))
+                    res['chart'].append(a)	
+                if  i.childModel=="bool":
+                    a['unit'] = i.unit
+                    a['yAxisName'] = i.yaxis
+                    a['stopSet'] = i.stop
+                    a['alarmSet'] = i.alarm
+                    a['warningSet'] = i.warning
+                    a['arrDataChart'] = list(i.databoolean_set.annotate(x=F('datetime'),y=F('value')).order_by("x").values('x','y'))
+                    res['chart'].append(a)	
+                if i.childModel=="oee":
+                    a['unit'] = i.unit
+                    obj = {"name":"VYKLUCHEN",'data':list(i.dataoee_set.filter(value=0).annotate(x=F('datetimeStart'),x2=F('datetime'),y=F('name')).order_by("x").values('x','x2','y'))}
+                    obj1 = {"name":"RABOTA",'data':list(i.dataoee_set.filter(value=1).annotate(x=F('datetimeStart'),x2=F('datetime'),y=F('name')).order_by("x").values('x','x2','y'))}
+                    obj2 = {"name":"PROSTOI",'data':list(i.dataoee_set.filter(value=2).annotate(x=F('datetimeStart'),x2=F('datetime'),y=F('name')).order_by("x").values('x','x2','y'))}
+                    obj3 = {"name":"AVARIA",'data':list(i.dataoee_set.filter(value=3).annotate(x=F('datetimeStart'),x2=F('datetime'),y=F('name')).order_by("x").values('x','x2','y'))}
+                    a['strData'] = [obj1,obj3,obj,obj2]
+                    res['chartD'].append(a)		
+        #dataLine = serializers.serialize('json', line)
+        dataPoint = json.dumps(res,default=datetimeconverter)
+        context = {'dataPoint':dataPoint}
+        json_context = json.dumps(context,default=datetimeconverter)
+        return Response({"data": json_context})

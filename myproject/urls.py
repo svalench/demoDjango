@@ -60,4 +60,13 @@ urlpatterns = [
     path('graph/view/list/all',GraphView.list,name='graphListAll'),
     path('graph/view/<int:id>/all',GraphView.viewGraph,name='graphAll'),
     path('graph/update/value/granica',GraphView.updateZone,name='updateGranica'),
+
+
+
+
+
+
+
+    path('api/Lines/<int:id>/get/', LineViewAPI.as_view()),
+    path('api/GrapLine/<int:id>/get/', LineViewAPI.viewGraph),
 ]
